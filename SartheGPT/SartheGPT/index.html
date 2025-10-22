@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SartheGPT - Assistant IA Territorial</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            width: 100%;
+            max-width: 600px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            font-weight: bold;
+        }
+
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 2.2em;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            margin-bottom: 10px;
+        }
+
+        .beta-badge {
+            display: inline-block;
+            background: #ff6b6b;
+            color: white;
+            padding: 4px 12px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            font-weight: bold;
+            margin-bottom: 30px;
+        }
+
+        .features {
+            margin-bottom: 40px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: rgba(102, 126, 234, 0.1);
+            border-radius: 10px;
+            transition: transform 0.2s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-2px);
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+
+        .access-section {
+            text-align: center;
+        }
+
+        .access-button {
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .access-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .status {
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        .status.success {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+            border: 1px solid rgba(40, 167, 69, 0.2);
+        }
+
+        .status.error {
+            background: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+            border: 1px solid rgba(220, 53, 69, 0.2);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #888;
+            font-size: 0.9em;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+        }
+
+		.modal-content {
+		position: fixed;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 100vh;
+		background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(248,250,252,0.95) 100%);
+		padding: 20px;
+		border-radius: 0;
+		box-shadow: none;
+		backdrop-filter: blur(10px);
+		border: none;
+		max-width: 100vw;
+		max-height: 100vh;
+		transform: none;
+		}
+		
+		.modal-content.fullscreen {
+		position: fixed !important;
+		top: 0 !important;
+		left: 0 !important;
+		width: 100vw !important;
+		height: 100vh !important;
+		max-width: 100vw !important;
+		max-height: 100vh !important;
+		border-radius: 0 !important;
+		transform: none !important;
+		padding: 15px !important;
+		}
+
+.modal-content.fullscreen #chatContainer {
+    height: calc(100vh - 100px) !important;
+}
+
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 24px;
+            cursor: pointer;
+            color: #999;
+            padding: 0;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: color 0.3s ease;
+        }
+
+        .close-modal:hover {
+            color: #333;
+        }
+
+		.modal-header {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		margin-bottom: 20px;
+		padding-bottom: 15px;
+		border-bottom: 2px solid rgba(102, 126, 234, 0.1);
+		}
+
+        .modal-title {
+            display: flex;
+            align-items: center;
+            font-size: 1.5em;
+            font-weight: bold;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .modal-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(45deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 18px;
+        }
+
+        .fullscreen-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .modal-content {
+                width: 98%;
+                height: 95%;
+                padding: 15px;
+            }
+            
+            .modal-title {
+                font-size: 1.2em;
+            }
+            
+            .modal-logo {
+                width: 35px;
+                height: 35px;
+                font-size: 16px;
+            }
+
+            .fullscreen-btn {
+                font-size: 0.8em;
+                padding: 6px 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">S</div>
+            <h1>SartheGPT</h1>
+            <div class="subtitle">Assistant IA spécialisé dans la Sarthe</div>
+            <div class="beta-badge">VERSION BETA</div>
+        </div>
+
+        <div class="features">
+            <div class="feature">
+                <div class="feature-icon">🏢</div>
+                <div>
+                    <strong>Expertise territoriale</strong><br>
+                    Conseils business adaptés au territoire sarthois
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🌤️</div>
+                <div>
+                    <strong>Données en temps réel</strong><br>
+                    Météo, actualités et informations locales
+                </div>
+            </div>
+            <div class="feature">
+                <div class="feature-icon">🚀</div>
+                <div>
+                    <strong>Support entrepreneurs</strong><br>
+                    Accompagnement pour PME et startups
+                </div>
+            </div>
+        </div>
+
+        <div class="access-section">
+            <a href="#" class="access-button" id="launchChat">
+                🚀 Lancer SartheGPT
+            </a>
+            <div id="status"></div>
+        </div>
+
+        <div class="footer">
+            <p>Version Beta • Feedback bienvenu • © 2025 ElsyvIA</p>
+        </div>
+    </div>
+
+    <!-- Modal pour intégrer le chat -->
+    <div id="chatModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title">
+                </div>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                    <button class="fullscreen-btn" id="fullscreenBtn">
+                        <span></span> 
+                    </button>
+                    <button class="close-modal" id="closeModal">&times;</button>
+                </div>
+            </div>
+        <div id="chatContainer" style="height: calc(100vh - 120px); border: 2px solid rgba(102, 126, 234, 0.2); border-radius: 15px; overflow: hidden; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.05);">                <iframe id="chatFrame" style="width: 100%; height: 100%; border: none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // URL du chat intégrée directement
+        const CHAT_URL = 'https://n8n.bitzibox.fr/webhook/1e713d17-fb8e-44e3-ab92-83ffe82debdb/chat';
+
+        // Afficher le statut
+        function showStatus(message, type) {
+            const status = document.getElementById('status');
+            status.textContent = message;
+            status.className = `status ${type}`;
+            
+            setTimeout(() => {
+                status.textContent = '';
+                status.className = '';
+            }, 3000);
+        }
+
+        // Fonction pour tenter le focus
+        function tryFocusChat() {
+            const iframe = document.getElementById('chatFrame');
+            setTimeout(() => {
+                try {
+                    const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+                    const input = iframeDoc.querySelector('textarea, input[type="text"], [role="textbox"]');
+                    if (input) {
+                        input.focus();
+                    }
+                } catch(e) {
+                    console.log('Cannot access iframe:', e);
+                }
+            }, 1500);
+        }
+
+        // Lancer le chat dans le modal
+        document.getElementById('launchChat').addEventListener('click', function(e) {
+            e.preventDefault();
+            
+            // Charger l'iframe et afficher le modal
+            document.getElementById('chatFrame').src = CHAT_URL;
+            document.getElementById('chatModal').style.display = 'block';
+            
+            // Tenter le focus après chargement
+            document.getElementById('chatFrame').onload = tryFocusChat;
+            
+            showStatus('Chargement de SartheGPT...', 'success');
+        });
+
+        // Fermer le modal
+        document.getElementById('closeModal').addEventListener('click', function() {
+            document.getElementById('chatModal').style.display = 'none';
+            document.getElementById('chatFrame').src = '';
+        });
+
+        // Fermer en cliquant à l'extérieur
+        window.addEventListener('click', function(e) {
+            if (e.target === document.getElementById('chatModal')) {
+                document.getElementById('chatModal').style.display = 'none';
+                document.getElementById('chatFrame').src = '';
+            }
+        });
+
+        // Fermer avec la touche Échap
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape' && document.getElementById('chatModal').style.display === 'block') {
+                document.getElementById('chatModal').style.display = 'none';
+                document.getElementById('chatFrame').src = '';
+            }
+        });
+    </script>
+</body>
+</html>

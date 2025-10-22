@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SartheGPT - Chat</title>
+    <style>
+        /* CSS pour que le chat prenne 100% de la page */
+        body, html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body>
+    <!-- Le script d'intégration de n8n -->
+    <script src="https://n8n.bitzibox.fr/public/chat/index.js" defer></script>
+    
+    <!-- L'élément qui va contenir notre chat -->
+    <n8n-chat webhookUrl="https://n8n.bitzibox.fr/webhook/1e713d17-fb8e-44e3-ab92-83ffe82debdb"></n8n-chat>
+
+    <script>
+        // Ce script s'exécute dès que la page est chargée
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. On cherche la question dans l'URL
+            const params = new URLSearchParams(window.location.search);
+            const question = params.get('question');
+
+            // 2. Si une question a été trouvée...
+            if (question) {
+                // ...on trouve l'élément du chat n8n
+                const n8nChatElement = document.querySelector('n8n-chat');
+
+                // 3. On utilise l'attribut officiel `initialMessage` pour lui passer la question
+                // C'est la méthode supportée par n8n pour faire cela !
+                if (n8nChatElement) {
+                    n8nChatElement.setAttribute('initialMessage', question);
+                }
+            }
+        });
+    </script>
+</body>
+</html>

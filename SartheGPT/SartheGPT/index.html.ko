@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SartheGPT - Assistant IA Territorial</title>
+    <style>
+        /* ... (Tout votre CSS reste identique, je le cache pour la lisibilité) ... */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px; }
+        .container { background: rgba(255, 255, 255, 0.95); border-radius: 20px; box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1); padding: 40px; width: 100%; max-width: 600px; backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.2); text-align: center; }
+        .header { margin-bottom: 30px; }
+        .logo { width: 80px; height: 80px; margin: 0 auto 20px; background: linear-gradient(45deg, #667eea, #764ba2); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 36px; color: white; font-weight: bold; }
+        h1 { color: #333; margin-bottom: 10px; font-size: 2.2em; background: linear-gradient(45deg, #667eea, #764ba2); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+        .subtitle { color: #666; font-size: 1.1em; margin-bottom: 10px; }
+        .beta-badge { display: inline-block; background: #ff6b6b; color: white; padding: 4px 12px; border-radius: 15px; font-size: 0.8em; font-weight: bold; margin-bottom: 30px; }
+        .popular-questions-section { margin-bottom: 40px; }
+        .popular-questions-section h2 { color: #555; font-size: 1.1em; margin-bottom: 15px; font-weight: 600; }
+        .buttons-container { display: flex; flex-wrap: wrap; gap: 10px; justify-content: center; }
+        .popular-question-btn { background-color: #f5f2eb; border: 1px solid #e9e6e0; border-radius: 8px; padding: 10px 15px; font-size: 14px; color: #333; cursor: pointer; transition: all 0.2s ease; display: flex; align-items: center; gap: 8px; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-decoration: none; }
+        .popular-question-btn:hover { background-color: #e9e6e0; transform: translateY(-2px); box-shadow: 0 2px 6px rgba(0,0,0,0.08); }
+        hr { border: none; height: 1px; background-color: #e0e0e0; margin-bottom: 40px; }
+        .access-button { background: linear-gradient(45deg, #667eea, #764ba2); color: white; border: none; padding: 15px 40px; border-radius: 50px; font-size: 1.1em; font-weight: bold; cursor: pointer; transition: all 0.3s ease; text-decoration: none; display: inline-block; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4); }
+        .access-button:hover { transform: translateY(-2px); box-shadow: 0 7px 20px rgba(102, 126, 234, 0.6); }
+        .footer { margin-top: 30px; color: #888; font-size: 0.9em; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="logo">S</div>
+            <h1>SartheGPT</h1>
+            <div class="subtitle">Assistant IA spécialisé dans la Sarthe</div>
+            <div class="beta-badge">VERSION BETA</div>
+        </div>
+
+        <div class="popular-questions-section">
+            <h2>Essayez une question populaire :</h2>
+            <div class="buttons-container">
+                <a href="#" class="popular-question-btn" data-question="Ouvrir un restaurant au Mans">🍴 Ouvrir un restaurant au Mans</a>
+                <a href="#" class="popular-question-btn" data-question="Secteurs porteurs en Sarthe">📈 Secteurs porteurs en Sarthe</a>
+                <a href="#" class="popular-question-btn" data-question="Success stories locales">🏆 Success stories locales</a>
+                <a href="#" class="popular-question-btn" data-question="Aides publiques disponibles">💰 Aides publiques disponibles</a>
+                <a href="#" class="popular-question-btn" data-question="Choix d'implantation">📍 Choix d'implantation</a>
+                <a href="#" class="popular-question-btn" data-question="Mentalité client locale">🧠 Mentalité client locale</a>
+            </div>
+        </div>
+
+        <hr>
+
+        <div class="access-section">
+            <a href="#" class="access-button" id="launchChat">
+                🚀 Lancer une conversation
+            </a>
+        </div>
+
+        <div class="footer">
+            <p>Version Beta • Feedback bienvenu • © 2025 ElsyvIA</p>
+        </div>
+    </div>
+
+    <script>
+        // Fonction pour rediriger vers la page de chat avec une question optionnelle
+        function goToChat(question = null) {
+            let url = 'chat.html';
+            if (question) {
+                url += '?question=' + encodeURIComponent(question);
+            }
+            window.open(url, 'SartheGPT');
+        }
+
+        // 1. Bouton pour lancer une conversation vide
+        document.getElementById('launchChat').addEventListener('click', (e) => {
+            e.preventDefault();
+            goToChat();
+        });
+
+        // 2. Boutons de questions populaires
+        document.querySelectorAll('.popular-question-btn').forEach(button => {
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                const question = e.currentTarget.dataset.question;
+                goToChat(question);
+            });
+        });
+    </script>
+</body>
+</html>
